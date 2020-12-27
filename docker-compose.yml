@@ -1,0 +1,22 @@
+version: '3'
+services:
+  dbpostgresql:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: mydb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+  app:
+    container_name: docker-project
+    image: docker-project
+    build: ./
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_POSTGRES_DB: jdbc:postgresql://dbpostgresql/mydb
+      SPRING_POSTGRES_USER: postgres
+      SPRING_POSTGRES_PASSWORD: password
+    depends_on:
+      - dbpostgresql
