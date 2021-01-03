@@ -1,7 +1,7 @@
 package gorbats.dockerproject.controller;
 
-import gorbats.dockerproject.model.UserModel;
-import gorbats.dockerproject.repository.UserRepository;
+import gorbats.dockerproject.model.UserAccount;
+import gorbats.dockerproject.repository.UserAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,27 +14,27 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 public class UserController {
 
-  private UserRepository userRepository;
+  private UserAccountRepository userAccountRepository;
 
   @Autowired
-  public UserController(UserRepository userRepository) {
-    this.userRepository = userRepository;
+  public UserController(UserAccountRepository userAccountRepository) {
+    this.userAccountRepository = userAccountRepository;
   }
 
   @GetMapping("/user/all")
-  Iterable<UserModel> all() {
-    return userRepository.findAll();
+  Iterable<UserAccount> all() {
+    return userAccountRepository.findAll();
   }
 
   @GetMapping("/user/{id}")
-  UserModel userById(@PathVariable Long id) {
-    return userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(
+  UserAccount userById(@PathVariable Long id) {
+    return userAccountRepository.findById(id).orElseThrow(() -> new ResponseStatusException(
         HttpStatus.NOT_FOUND));
   }
 
   @PostMapping("/user/save")
-  UserModel save(@RequestBody UserModel userModel) {
-    return userRepository.save(userModel);
+  UserAccount save(@RequestBody UserAccount userAccount) {
+    return userAccountRepository.save(userAccount);
   }
 
 }
