@@ -1,0 +1,48 @@
+openapi: 3.0.0
+info:
+  title: 'Gorbats API'
+  version: '0.0.1'
+paths:
+  /accounts:
+    post:
+      summary: 'Create new account'
+      tags:
+        - Users
+      requestBody:
+        description: 'Account registration request body'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserAccountRequest'
+      responses:
+        '200':
+          description: 'New User'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAccountResponse'
+
+components:
+  schemas:
+    UserAccountRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    UserAccountResponse:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        id:
+          type: integer
+          format: int64
+        email:
+          type: string
